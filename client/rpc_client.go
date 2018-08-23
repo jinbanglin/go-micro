@@ -254,11 +254,11 @@ func (r *rpcClient) Call(ctx context.Context, request Request, response interfac
 	md, ok := metadata.FromContext(ctx)
 	if !ok {
 		md = metadata.Metadata{}
-	}else if _,ok:=md["X-Sole-Id"];!ok{
-		md["X-Sole-Id"] = uuid.New().String()
-		ctx = metadata.NewContext(ctx, md)
+	}else if _,ok:=md["X-Trace-Id"];!ok{
+		md["X-Trace-Id"] = uuid.New().String()
 	}
-
+	md["X-Sole-Id"] = uuid.New().String()
+	ctx = metadata.NewContext(ctx, md)
 	// make a copy of call opts
 	callOpts := r.opts.CallOptions
 	for _, opt := range opts {
@@ -325,10 +325,9 @@ func (r *rpcClient) Call(ctx context.Context, request Request, response interfac
 		}
 
 		now := time.Now()
-		// make the call
 		log.Infof(" |RPC_FROM |trace=%s |service=%s |server_id=%s |method=%s |metadata=%s "+
 			"|time=%v |address=%s |port=%d |content_type=%s |request=%v",
-			md["X-Sole-Id"],
+			md["X-Trace-Id"],
 			request.Service(),
 			node.Id,
 			request.Method(),
@@ -339,12 +338,13 @@ func (r *rpcClient) Call(ctx context.Context, request Request, response interfac
 			request.ContentType(),
 			helper.Marshal2String(request.Request()),
 		)
+		// make the call
 		err = rcall(ctx, address, request, response, callOpts)
 		r.opts.Selector.Mark(request.Service(), node, err)
 		log.Infof(" |RPC_TO |duration=%v |trace=%s |service=%s |server_id=%s |method=%s |metadata=%s "+
 			"|time=%v |address=%s |port=%d |content_type=%s |request=%v |err=%v",
 			time.Since(now),
-			md["X-Sole-Id"],
+			md["X-Trace-Id"],
 			request.Service(),
 			node.Id,
 			request.Method(),
