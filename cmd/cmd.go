@@ -19,7 +19,6 @@ import (
 
 	// registries
 	"github.com/jinbanglin/go-micro/registry"
-	"github.com/jinbanglin/go-micro/registry/consul"
 	"github.com/jinbanglin/go-micro/registry/mdns"
 
 	// selectors
@@ -170,7 +169,7 @@ var (
 	}
 
 	DefaultRegistries = map[string]func(...registry.Option) registry.Registry{
-		"consul": consul.NewRegistry,
+		"etcdv3": registry.NewEtcdv3Registry,
 		"mdns":   mdns.NewRegistry,
 	}
 
@@ -186,14 +185,6 @@ var (
 	DefaultTransports = map[string]func(...transport.Option) transport.Transport{
 		"http": thttp.NewTransport,
 	}
-
-	// used for default selection as the fall back
-	defaultClient    = "rpc"
-	defaultServer    = "rpc"
-	defaultBroker    = "http"
-	defaultRegistry  = "consul"
-	defaultSelector  = "cache"
-	defaultTransport = "http"
 )
 
 func init() {

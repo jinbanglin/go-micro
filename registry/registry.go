@@ -26,13 +26,13 @@ type RegisterOption func(*RegisterOptions)
 type WatchOption func(*WatchOptions)
 
 var (
-	DefaultRegistry = newConsulRegistry()
+	DefaultRegistry = NewEtcdv3Registry()
 
 	ErrNotFound = errors.New("not found")
 )
 
 func NewRegistry(opts ...Option) Registry {
-	return newConsulRegistry(opts...)
+	return NewEtcdv3Registry(opts...)
 }
 
 // Register a service node. Additionally supply options such as TTL.
