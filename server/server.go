@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/micro/go-log"
+	"github.com/jinbanglin/log"
 	"github.com/pborman/uuid"
 )
 
@@ -140,7 +140,7 @@ func Run() error {
 
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)
-	log.Logf("Received signal %s", <-ch)
+	log.Infof("Received signal %s", <-ch)
 
 	if err := DefaultServer.Deregister(); err != nil {
 		return err
@@ -152,13 +152,13 @@ func Run() error {
 // Start starts the default server
 func Start() error {
 	config := DefaultServer.Options()
-	log.Logf("Starting server %s id %s", config.Name, config.Id)
+	log.Infof("Starting server %s id %s", config.Name, config.Id)
 	return DefaultServer.Start()
 }
 
 // Stop stops the default server
 func Stop() error {
-	log.Logf("Stopping server")
+	log.Infof("Stopping server")
 	return DefaultServer.Stop()
 }
 

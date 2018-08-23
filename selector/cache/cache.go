@@ -5,9 +5,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/micro/go-log"
-	"github.com/micro/go-micro/registry"
-	"github.com/micro/go-micro/selector"
+	"github.com/jinbanglin/log"
+	"github.com/jinbanglin/go-micro/registry"
+	"github.com/jinbanglin/go-micro/selector"
 )
 
 type cacheSelector struct {
@@ -271,7 +271,7 @@ func (c *cacheSelector) run(name string) {
 			if c.quit() {
 				return
 			}
-			log.Log(err)
+			log.Error(err)
 			time.Sleep(time.Second)
 			continue
 		}
@@ -281,7 +281,7 @@ func (c *cacheSelector) run(name string) {
 			if c.quit() {
 				return
 			}
-			log.Log(err)
+			log.Error(err)
 			continue
 		}
 	}

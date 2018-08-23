@@ -7,14 +7,16 @@ import (
 	"sync"
 	"time"
 
-	"github.com/micro/go-micro/broker"
-	"github.com/micro/go-micro/codec"
-	"github.com/micro/go-micro/errors"
-	"github.com/micro/go-micro/metadata"
-	"github.com/micro/go-micro/registry"
-	"github.com/micro/go-micro/selector"
-	"github.com/micro/go-micro/transport"
+	"github.com/jinbanglin/go-micro/broker"
+	"github.com/jinbanglin/go-micro/codec"
+	"github.com/jinbanglin/go-micro/errors"
+	"github.com/jinbanglin/go-micro/metadata"
+	"github.com/jinbanglin/go-micro/registry"
+	"github.com/jinbanglin/go-micro/selector"
+	"github.com/jinbanglin/go-micro/transport"
 	"sync/atomic"
+	gouuid "github.com/satori/go.uuid"
+	"github.com/nu7hatch/gouuid"
 )
 
 type rpcClient struct {
@@ -247,6 +249,19 @@ func (r *rpcClient) next(request Request, opts CallOptions) (selector.Next, erro
 }
 
 func (r *rpcClient) Call(ctx context.Context, request Request, response interface{}, opts ...CallOption) error {
+	//add by jinbanglin
+	md, ok := metadata.FromContext(ctx)
+	if !ok {
+		md = metadata.Metadata{}
+	}
+	if soleID, err := uuid.NewV4(); err == nil {
+		md["X-Sole-Id"] = soleID.String()
+		ctx = metadata.NewContext(ctx, md)
+	} else {
+		md["X-Sole-Id"] = gouuid.NewV4().String()
+		ctx = metadata.NewContext(ctx, md)
+	}
+
 	// make a copy of call opts
 	callOpts := r.opts.CallOptions
 	for _, opt := range opts {

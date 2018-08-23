@@ -7,10 +7,10 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/micro/go-micro/broker"
-	"github.com/micro/go-micro/codec"
-	"github.com/micro/go-micro/metadata"
-	"github.com/micro/go-micro/registry"
+	"github.com/jinbanglin/go-micro/broker"
+	"github.com/jinbanglin/go-micro/codec"
+	"github.com/jinbanglin/go-micro/metadata"
+	"github.com/jinbanglin/go-micro/registry"
 )
 
 const (

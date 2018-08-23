@@ -13,10 +13,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/micro/go-log"
-	maddr "github.com/micro/util/go/lib/addr"
-	mnet "github.com/micro/util/go/lib/net"
-	mls "github.com/micro/util/go/lib/tls"
+	"github.com/jinbanglin/log"
+	maddr "github.com/jinbanglin/util/go/lib/addr"
+	mnet "github.com/jinbanglin/util/go/lib/net"
+	mls "github.com/jinbanglin/util/go/lib/tls"
 )
 
 type buffer struct {
@@ -301,7 +301,7 @@ func (h *httpTransportListener) Accept(fn func(Socket)) error {
 				if max := 1 * time.Second; tempDelay > max {
 					tempDelay = max
 				}
-				log.Logf("http: Accept error: %v; retrying in %v\n", err, tempDelay)
+				log.Infof("http: Accept error: %v; retrying in %v\n", err, tempDelay)
 				time.Sleep(tempDelay)
 				continue
 			}
@@ -319,7 +319,7 @@ func (h *httpTransportListener) Accept(fn func(Socket)) error {
 			// TODO: think of a better error response strategy
 			defer func() {
 				if r := recover(); r != nil {
-					log.Log("panic recovered: ", r)
+					log.Info("panic recovered: ", r)
 					sock.Close()
 				}
 			}()

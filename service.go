@@ -7,12 +7,12 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/micro/cli"
-	"github.com/micro/go-log"
-	"github.com/micro/go-micro/client"
-	"github.com/micro/go-micro/cmd"
-	"github.com/micro/go-micro/metadata"
-	"github.com/micro/go-micro/server"
+	"github.com/jinbanglin/cli"
+	"github.com/jinbanglin/log"
+	"github.com/jinbanglin/go-micro/client"
+	"github.com/jinbanglin/go-micro/cmd"
+	"github.com/jinbanglin/go-micro/metadata"
+	"github.com/jinbanglin/go-micro/server"
 )
 
 type service struct {
@@ -48,7 +48,7 @@ func (s *service) run(exit chan bool) {
 		case <-t.C:
 			err := s.opts.Server.Register()
 			if err != nil {
-				log.Log("service run Server.Register error: ", err)
+				log.Info("service run Server.Register error: ", err)
 			}
 		case <-exit:
 			t.Stop()

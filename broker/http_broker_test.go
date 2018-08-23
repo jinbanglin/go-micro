@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/micro/go-micro/registry/mock"
+	"github.com/jinbanglin/go-micro/registry/mock"
 	"github.com/pborman/uuid"
 )
 

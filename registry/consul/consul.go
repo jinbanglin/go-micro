@@ -1,7 +1,7 @@
 package consul
 
 import (
-	"github.com/micro/go-micro/registry"
+	"github.com/jinbanglin/go-micro/registry"
 )
 
 func NewRegistry(opts ...registry.Option) registry.Registry {

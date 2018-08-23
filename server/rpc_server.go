@@ -10,14 +10,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/micro/go-log"
-	"github.com/micro/go-micro/broker"
-	"github.com/micro/go-micro/codec"
-	"github.com/micro/go-micro/metadata"
-	"github.com/micro/go-micro/registry"
-	"github.com/micro/go-micro/transport"
+	"github.com/jinbanglin/log"
+	"github.com/jinbanglin/go-micro/broker"
+	"github.com/jinbanglin/go-micro/codec"
+	"github.com/jinbanglin/go-micro/metadata"
+	"github.com/jinbanglin/go-micro/registry"
+	"github.com/jinbanglin/go-micro/transport"
 
-	"github.com/micro/util/go/lib/addr"
+	"github.com/jinbanglin/util/go/lib/addr"
 )
 
 type rpcServer struct {
@@ -55,8 +55,8 @@ func (s *rpcServer) accept(sock transport.Socket) {
 		sock.Close()
 
 		if r := recover(); r != nil {
-			log.Log("panic recovered: ", r)
-			log.Log(string(debug.Stack()))
+			log.Info("panic recovered: ", r)
+			log.Info(string(debug.Stack()))
 		}
 	}()
 
@@ -109,7 +109,7 @@ func (s *rpcServer) accept(sock transport.Socket) {
 		// TODO: needs better error handling
 		if err := s.rpc.serveRequest(ctx, codec, ct); err != nil {
 			s.wg.Done()
-			log.Logf("Unexpected error serving request, closing socket: %v", err)
+			log.Infof("Unexpected error serving request, closing socket: %v", err)
 			return
 		}
 		s.wg.Done()
@@ -276,7 +276,7 @@ func (s *rpcServer) Register() error {
 	s.Unlock()
 
 	if !registered {
-		log.Logf("Registering node: %s", node.Id)
+		log.Infof("Registering node: %s", node.Id)
 	}
 
 	// create registry options
@@ -351,7 +351,7 @@ func (s *rpcServer) Deregister() error {
 		Nodes:   []*registry.Node{node},
 	}
 
-	log.Logf("Deregistering node: %s", node.Id)
+	log.Infof("Deregistering node: %s", node.Id)
 	if err := config.Registry.Deregister(service); err != nil {
 		return err
 	}
@@ -367,7 +367,7 @@ func (s *rpcServer) Deregister() error {
 
 	for sb, subs := range s.subscribers {
 		for _, sub := range subs {
-			log.Logf("Unsubscribing from topic: %s", sub.Topic())
+			log.Infof("Unsubscribing from topic: %s", sub.Topic())
 			sub.Unsubscribe()
 		}
 		s.subscribers[sb] = nil
@@ -386,7 +386,7 @@ func (s *rpcServer) Start() error {
 		return err
 	}
 
-	log.Logf("Listening on %s", ts.Addr())
+	log.Infof("Listening on %s", ts.Addr())
 	s.Lock()
 	// swap address
 	addr := s.opts.Address

@@ -9,26 +9,26 @@ import (
 	"strings"
 	"time"
 
-	"github.com/micro/cli"
-	"github.com/micro/go-micro/client"
-	"github.com/micro/go-micro/server"
+	"github.com/jinbanglin/cli"
+	"github.com/jinbanglin/go-micro/client"
+	"github.com/jinbanglin/go-micro/server"
 
 	// brokers
-	"github.com/micro/go-micro/broker"
-	"github.com/micro/go-micro/broker/http"
+	"github.com/jinbanglin/go-micro/broker"
+	"github.com/jinbanglin/go-micro/broker/http"
 
 	// registries
-	"github.com/micro/go-micro/registry"
-	"github.com/micro/go-micro/registry/consul"
-	"github.com/micro/go-micro/registry/mdns"
+	"github.com/jinbanglin/go-micro/registry"
+	"github.com/jinbanglin/go-micro/registry/consul"
+	"github.com/jinbanglin/go-micro/registry/mdns"
 
 	// selectors
-	"github.com/micro/go-micro/selector"
-	"github.com/micro/go-micro/selector/cache"
+	"github.com/jinbanglin/go-micro/selector"
+	"github.com/jinbanglin/go-micro/selector/cache"
 
 	// transports
-	"github.com/micro/go-micro/transport"
-	thttp "github.com/micro/go-micro/transport/http"
+	"github.com/jinbanglin/go-micro/transport"
+	thttp "github.com/jinbanglin/go-micro/transport/http"
 )
 
 type Cmd interface {

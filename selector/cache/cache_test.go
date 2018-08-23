@@ -3,8 +3,8 @@ package cache
 import (
 	"testing"
 
-	"github.com/micro/go-micro/registry/mock"
-	"github.com/micro/go-micro/selector"
+	"github.com/jinbanglin/go-micro/registry/mock"
+	"github.com/jinbanglin/go-micro/selector"
 )
 
 func TestCacheSelector(t *testing.T) {

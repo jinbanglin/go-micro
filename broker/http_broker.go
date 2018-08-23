@@ -18,14 +18,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/micro/go-log"
-	"github.com/micro/go-micro/broker/codec/json"
-	merr "github.com/micro/go-micro/errors"
-	"github.com/micro/go-micro/registry"
-	"github.com/micro/go-rcache"
-	maddr "github.com/micro/util/go/lib/addr"
-	mnet "github.com/micro/util/go/lib/net"
-	mls "github.com/micro/util/go/lib/tls"
+	"github.com/jinbanglin/log"
+	"github.com/jinbanglin/go-micro/broker/codec/json"
+	merr "github.com/jinbanglin/go-micro/errors"
+	"github.com/jinbanglin/go-micro/registry"
+	"github.com/jinbanglin/go-rcache"
+	maddr "github.com/jinbanglin/util/go/lib/addr"
+	mnet "github.com/jinbanglin/util/go/lib/net"
+	mls "github.com/jinbanglin/util/go/lib/tls"
 	"github.com/pborman/uuid"
 )
 
@@ -328,7 +328,7 @@ func (h *httpBroker) Connect() error {
 		return err
 	}
 
-	log.Logf("Broker Listening on %s", l.Addr().String())
+	log.Infof("Broker Listening on %s", l.Addr().String())
 	addr := h.address
 	h.address = l.Addr().String()
 
