@@ -16,6 +16,8 @@ import (
 	"github.com/jinbanglin/go-micro/transport"
 	"sync/atomic"
 	"github.com/google/uuid"
+	"github.com/jinbanglin/log"
+	"github.com/jinbanglin/helper"
 )
 
 type rpcClient struct {
@@ -321,9 +323,37 @@ func (r *rpcClient) Call(ctx context.Context, request Request, response interfac
 			address = fmt.Sprintf("%s:%d", address, node.Port)
 		}
 
+		now := time.Now()
 		// make the call
+		log.Infof(" |RPC_FROM |trace=%s |service=%s |server_id=%s |method=%s |metadata=%s "+
+			"|time=%v |address=%s |port=%d |content_type=%s |request=%v",
+			md["X-Sole-Id"],
+			request.Service(),
+			node.Id,
+			request.Method(),
+			node.Metadata,
+			now.Format(time.RFC3339),
+			node.Address,
+			node.Port,
+			request.ContentType(),
+			helper.Marshal2String(request.Request()),
+		)
 		err = rcall(ctx, address, request, response, callOpts)
 		r.opts.Selector.Mark(request.Service(), node, err)
+		log.Infof(" |RPC_TO |duration=%d |trace=%s |service=%s |server_id=%s |method=%s |metadata=%s "+
+			"|time=%v |address=%s |port=%d |content_type=%s |request=%v |err=%v",
+			md["X-Sole-Id"],
+			request.Service(),
+			node.Id,
+			request.Method(),
+			node.Metadata,
+			now.Format(time.RFC3339),
+			node.Address,
+			node.Port,
+			request.ContentType(),
+			helper.Marshal2String(response),
+			err,
+		)
 		return err
 	}
 
