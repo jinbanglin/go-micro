@@ -33,7 +33,7 @@ type WatchOptions struct {
 	Context context.Context
 }
 
-// Addrs is the registry addresses to use
+// Addrs is the defaultRegistry addresses to use
 func Addrs(addrs ...string) Option {
 	return func(o *Options) {
 		o.Addrs = addrs
@@ -46,7 +46,7 @@ func Timeout(t time.Duration) Option {
 	}
 }
 
-// Secure communication with the registry
+// Secure communication with the defaultRegistry
 func Secure(b bool) Option {
 	return func(o *Options) {
 		o.Secure = b

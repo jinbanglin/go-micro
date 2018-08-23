@@ -1,7 +1,7 @@
 package registry
 
 // Watcher is an interface that returns updates
-// about services within the registry.
+// about services within the defaultRegistry.
 type Watcher interface {
 	// Next is a blocking call
 	Next() (*Result, error)

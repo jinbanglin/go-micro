@@ -169,7 +169,7 @@ var (
 	}
 
 	DefaultRegistries = map[string]func(...registry.Option) registry.Registry{
-		"etcdv3": registry.NewEtcdv3Registry,
+		"etcdv3": registry.NewRegistry,
 		"mdns":   mdns.NewRegistry,
 	}
 

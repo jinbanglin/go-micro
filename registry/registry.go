@@ -1,11 +1,11 @@
-// Package registry is an interface for service discovery
+// Package defaultRegistry is an interface for service discovery
 package registry
 
 import (
 	"errors"
 )
 
-// The registry provides an interface for service discovery
+// The defaultRegistry provides an interface for service discovery
 // and an abstraction over varying implementations
 // {consul, etcd, zookeeper, ...}
 type Registry interface {
@@ -26,13 +26,13 @@ type RegisterOption func(*RegisterOptions)
 type WatchOption func(*WatchOptions)
 
 var (
-	DefaultRegistry = NewEtcdv3Registry()
+	DefaultRegistry = defaultRegistry()
 
 	ErrNotFound = errors.New("not found")
 )
 
 func NewRegistry(opts ...Option) Registry {
-	return NewEtcdv3Registry(opts...)
+	return defaultRegistry(opts...)
 }
 
 // Register a service node. Additionally supply options such as TTL.
@@ -55,7 +55,7 @@ func ListServices() ([]*Service, error) {
 	return DefaultRegistry.ListServices()
 }
 
-// Watch returns a watcher which allows you to track updates to the registry.
+// Watch returns a watcher which allows you to track updates to the defaultRegistry.
 func Watch(opts ...WatchOption) (Watcher, error) {
 	return DefaultRegistry.Watch(opts...)
 }

@@ -1,4 +1,4 @@
-// Package etcdv3 provides an etcd version 3 registry
+// Package etcdv3 provides an etcd version 3 defaultRegistry
 package registry
 
 import (
@@ -18,7 +18,7 @@ import (
 )
 
 var (
-	prefix = "/micro-registry"
+	prefix = "/micro-defaultRegistry"
 )
 
 type etcdv3Registry struct {
@@ -289,7 +289,7 @@ func (e *etcdv3Registry) String() string {
 	return "etcdv3"
 }
 
-func NewEtcdv3Registry(opts ...Option) Registry {
+func defaultRegistry(opts ...Option) Registry {
 	e := &etcdv3Registry{
 		options:  Options{},
 		register: make(map[string]uint64),
