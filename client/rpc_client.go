@@ -15,8 +15,7 @@ import (
 	"github.com/jinbanglin/go-micro/selector"
 	"github.com/jinbanglin/go-micro/transport"
 	"sync/atomic"
-	gouuid "github.com/satori/go.uuid"
-	"github.com/nu7hatch/gouuid"
+	"github.com/google/uuid"
 )
 
 type rpcClient struct {
@@ -254,13 +253,8 @@ func (r *rpcClient) Call(ctx context.Context, request Request, response interfac
 	if !ok {
 		md = metadata.Metadata{}
 	}
-	if soleID, err := uuid.NewV4(); err == nil {
-		md["X-Sole-Id"] = soleID.String()
-		ctx = metadata.NewContext(ctx, md)
-	} else {
-		md["X-Sole-Id"] = gouuid.NewV4().String()
-		ctx = metadata.NewContext(ctx, md)
-	}
+	md["X-Sole-Id"] = uuid.New().String()
+	ctx = metadata.NewContext(ctx, md)
 
 	// make a copy of call opts
 	callOpts := r.opts.CallOptions
