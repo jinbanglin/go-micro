@@ -325,10 +325,9 @@ func (r *rpcClient) Call(ctx context.Context, request Request, response interfac
 		}
 
 		now := time.Now()
-		log.Infof(" |RCP_REQ |trace=%s |service=%s |server_id=%s |method=%s |metadata=%s "+
+		log.Infof(" |RCP_REQ |trace=%s |service=%s |method=%s |metadata=%s "+
 			"|time=%v |address=%s |port=%d |content_type=%s |request=%v",
 			md["X-Trace-Id"],
-			request.Service(),
 			node.Id,
 			request.Method(),
 			node.Metadata,
@@ -341,11 +340,10 @@ func (r *rpcClient) Call(ctx context.Context, request Request, response interfac
 		// make the call
 		err = rcall(ctx, address, request, response, callOpts)
 		r.opts.Selector.Mark(request.Service(), node, err)
-		log.Infof(" |RCP_RSP |duration=%v |trace=%s |service=%s |server_id=%s |method=%s |metadata=%s "+
+		log.Infof(" |RCP_RSP |duration=%v |trace=%s |service=%s |method=%s |metadata=%s "+
 			"|time=%v |address=%s |port=%d |content_type=%s |response=%v |err=%v",
 			time.Since(now),
 			md["X-Trace-Id"],
-			request.Service(),
 			node.Id,
 			request.Method(),
 			node.Metadata,
