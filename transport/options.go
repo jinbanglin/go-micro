@@ -13,7 +13,7 @@ type Options struct {
 	Codec     codec.Codec
 	Secure    bool
 	TLSConfig *tls.Config
-	// Timeout sets the timeout for Send/Recv
+	// Timeout sets the timeout for send/Recv
 	Timeout time.Duration
 	// Other options for implementations of the interface
 	// can be stored in a context
@@ -56,7 +56,7 @@ func Codec(c codec.Codec) Option {
 	}
 }
 
-// Timeout sets the timeout for Send/Recv execution
+// Timeout sets the timeout for send/Recv execution
 func Timeout(t time.Duration) Option {
 	return func(o *Options) {
 		o.Timeout = t
