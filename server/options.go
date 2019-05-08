@@ -19,7 +19,7 @@ type Options struct {
 	Metadata     map[string]string
 	Name         string
 	Address      string
-	Advertise    string
+	Advertise    string  //ip 上级地址，即广播地址
 	Id           string
 	Version      string
 	HdlrWrappers []HandlerWrapper

@@ -266,6 +266,7 @@ func (r *rpcClient) Call(ctx context.Context, request Request, response interfac
   ctx = metadata.NewContext(ctx, md)
   // make a copy of call opts
   callOpts := r.opts.CallOptions
+
   for _, opt := range opts {
     opt(&callOpts)
   }
@@ -330,6 +331,7 @@ func (r *rpcClient) Call(ctx context.Context, request Request, response interfac
     }
 
     now := time.Now()
+
     log.Infof2(ctx, "RPC_REQ |service=%s |method=%s |metadata=%s "+
       "|time=%v |address=%s |port=%d |content_type=%s |request=%v",
       node.Id,
@@ -344,6 +346,7 @@ func (r *rpcClient) Call(ctx context.Context, request Request, response interfac
     // make the call
     err = rcall(ctx, address, request, response, callOpts)
     r.opts.Selector.Mark(request.Service(), node, err)
+
     log.Infof2(ctx, "RPC_RSP |duration=%v |service=%s |method=%s |metadata=%s "+
       "|time=%v |address=%s |port=%d |content_type=%s |response=%v |err=%v",
       time.Since(now),
